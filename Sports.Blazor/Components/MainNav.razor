@@ -16,7 +16,12 @@
                     border-left: .2rem solid #6005b5;
                 }
             </style>
-            <NavLink href="@GenHref(sportType)">@sportType</NavLink>
+            <NavLink 
+                ActiveClass="active-nav-item"
+                class="nav-item"
+                href="@GenHref(sportType)">
+                    @sportType
+                </NavLink>
         }
     </div>
     <button class="toggle-nav" title="Toggle Nav" @onclick=ToggleNav>
