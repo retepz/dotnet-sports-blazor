@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\Loading.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\Loading.razor" />
+    <None Include="Layout\MainContainer.razor" />
+    <None Include="Layout\MainContent.razor" />
+    <None Include="Components\MainHeader.razor" />
+    <None Include="Layout\RouteContentContainer.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.4" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

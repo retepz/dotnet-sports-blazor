@@ -1,0 +1,64 @@
+﻿@using Sports.Blazor.Components
+@using Sports.Blazor.Model
+<nav style="@GetNavElementCSS()">
+    <div style="@GetNavChildCSS()">
+        @foreach(var sportType in Enum.GetNames<SportType>().Where(name => name != $"{SportType.None}"))
+        {
+            <style>
+                @*Isolated css doesn't seem to work with NavLink.  Doing this workaround for now*@
+                .nav-item {
+                    display: flex;
+                    margin: 1rem 1rem 1rem .5rem;
+                }
+
+                .active-nav-item {
+                    padding-left: .5rem;
+                    border-left: .2rem solid #6005b5;
+                }
+            </style>
+            <NavLink href="@GenHref(sportType)">@sportType</NavLink>
+        }
+    </div>
+    <button class="toggle-nav" title="Toggle Nav" @onclick=ToggleNav>
+        <img src="@GetToggleImage()" />
+    </button>
+</nav>
+
+@code {
+    private bool Show { get; set; } = true;
+
+    private void ToggleNav()
+    {
+        Show = !Show;
+    }
+
+    private string GetToggleImage()
+    {
+        return Show ? "/images/close.svg" : "/images/open.svg";
+    }
+
+    private string GetNavElementCSS()
+    {
+        if (Show)
+        {
+            return "width: 11rem;border-right: .1rem solid #a8acbd;";
+        }
+
+        return "width: 0;";
+    }
+
+    private string GetNavChildCSS()
+    {
+        if (Show)
+        {
+            return "display: flex; flex-direction: column;";
+        }
+
+        return "display: none; flex-direction: column;";
+    }
+
+    private string GenHref(string sportType)
+    {
+        return $"/sports/{sportType}/leagues";
+    }
+}

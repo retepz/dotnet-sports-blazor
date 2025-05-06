@@ -1,0 +1,23 @@
+﻿@page "/"
+@page "/sports/{SportType}/leagues"
+@inject NavigationManager _navManager
+
+<PageTitle>Leagues | @SportType</PageTitle>
+<LayoutView Layout="typeof(RouteContentContainer)">
+    @SportType
+</LayoutView>
+
+@code{
+    protected override void OnInitialized()
+    {
+        var asUri = new Uri(_navManager.Uri);
+        if(asUri.AbsolutePath == "/")
+        {
+            var defaultSportType = Blazor.Model.SportType.Football;
+            _navManager.NavigateTo($"/sports/{defaultSportType}/leagues", replace: true);
+        }
+    }
+
+    [Parameter]
+    public string? SportType { get; init; }
+}

@@ -1,0 +1,9 @@
+﻿@using Sports.Blazor.Components
+@inherits LayoutComponentBase
+<MainHeader />
+<LayoutView Layout="typeof(MainContainer)">
+    <MainNav />
+    <LayoutView Layout="typeof(MainContent)">
+        @Body
+    </LayoutView>
+</LayoutView>
