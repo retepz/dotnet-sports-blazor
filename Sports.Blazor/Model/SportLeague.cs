@@ -1,9 +1,12 @@
 ﻿namespace Sports.Blazor.Model;
 
+using System.Text.Json.Serialization;
+
 public sealed record SportLeague
 {
     public string? Id { get; init; }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public LeagueType LeagueType { get; init; }
 
     public string? ShortName { get; init; }

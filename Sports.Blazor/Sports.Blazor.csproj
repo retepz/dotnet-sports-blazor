@@ -15,11 +15,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Components\Loading.razor" />
+    <Content Remove="appsettings.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Components\Loading.razor" />
     <None Include="Layout\MainContainer.razor" />
     <None Include="Layout\MainContent.razor" />
     <None Include="Components\MainHeader.razor" />

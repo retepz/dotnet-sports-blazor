@@ -2,6 +2,10 @@ namespace Sports.Blazor;
 
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Sports.Blazor.Config;
+using Sports.Blazor.Service;
+using Sports.Blazor.Service.Interface;
 
 public class Program
 {
@@ -13,6 +17,9 @@ public class Program
 
         builder
             .Services
+            .AddOptions()
+            .Configure<ApiConfig>(apiConfig => builder.Configuration.GetSection("Api").Bind(apiConfig))
+            .AddScoped<ISportLeagueService, SportLeagueService>()
             .AddScoped(sp => new HttpClient 
             { 
                 BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)

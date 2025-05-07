@@ -1,13 +1,28 @@
 ﻿@page "/"
 @page "/sports/{SportType}/leagues"
+@using Sports.Blazor.Components
+@using Sports.Blazor.Model
+@using Sports.Blazor.Service.Interface
+@inject ISportLeagueService _sportLeagueService
 @inject NavigationManager _navManager
 
 <PageTitle>Leagues | @SportType</PageTitle>
 <LayoutView Layout="typeof(RouteContentContainer)">
-    @SportType
-</LayoutView>
+    @if (Leagues != null)
+    {
+        @foreach (var league in Leagues)
+        {
+            <SportLeagueItem SportLeague=league />
+        }
+    }
+    else
+    {
+        <Loading />
+    }
+    </LayoutView>
 
 @code{
+
     protected override void OnInitialized()
     {
         var asUri = new Uri(_navManager.Uri);
@@ -17,6 +32,14 @@
             _navManager.NavigateTo($"/sports/{defaultSportType}/leagues", replace: true);
         }
     }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Leagues = null;
+        Leagues = await _sportLeagueService.Get(SportType!);
+    }
+
+    private IEnumerable<SportLeague>? Leagues { get; set; }
 
     [Parameter]
     public string? SportType { get; init; }
