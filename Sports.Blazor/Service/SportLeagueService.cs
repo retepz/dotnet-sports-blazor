@@ -28,4 +28,22 @@ public sealed class SportLeagueService(IOptions<ApiConfig> apiConfigOptions)
             .Leagues
             .Where(league => !string.IsNullOrEmpty(league.DisplayName) && league.LeagueType != LeagueType.None);
     }
+
+    public async Task<SportLeagueWeek?> GetWeek(string leagueType)
+    {
+        using var client = new HttpClient();
+        var url = $"{_apiConfig.Url}/api/leagues/{leagueType}/season/currentweek";
+        var result = await client.GetAsync(url);
+        if(result.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+
+        var serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
+        return await result.Content.ReadFromJsonAsync<SportLeagueWeek>();
+    }
 }
