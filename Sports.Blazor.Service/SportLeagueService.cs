@@ -46,4 +46,22 @@ public sealed class SportLeagueService(IOptions<ApiConfig> apiConfigOptions)
 
         return await result.Content.ReadFromJsonAsync<SportLeagueWeek>();
     }
+
+    public async Task<SportLeagueEvent[]?> GetWeekEvents(string leagueType)
+    {
+        using var client = new HttpClient();
+        var url = $"{_apiConfig.Url}/api/leagues/{leagueType}/season/currentweek/events";
+        var result = await client.GetAsync(url);
+        if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+
+        var serializeOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
+        return await result.Content.ReadFromJsonAsync<SportLeagueEvent[]>();
+    }
 }

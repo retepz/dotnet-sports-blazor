@@ -1,0 +1,44 @@
+﻿@using Sports.Blazor.Model
+<div style="
+     grid-row: 1;
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr;
+     padding: 1rem;
+     border-radius: .5rem;
+     background-color: #1F2122;
+">
+    <div style="justify-self: start ">@LeftHeaderValue</div>
+    <div style="justify-self: center ">@CenterHeaderValue</div>
+    <div style="
+         text-align: end;
+         text-overflow: ellipsis;
+         white-space: nowrap;
+         overflow: hidden;
+    ">
+        @RightHeaderValue
+    </div>
+</div>
+
+@code {
+    protected override void OnParametersSet()
+    {
+        LeftHeaderValue = Event.IsLive
+            ? Event.StatusType
+            : Event.GameTimeLocal!.Value.ToString("d");
+
+        CenterHeaderValue = Event.IsInFuture
+            ? Event.GameTimeLocal!.Value.ToString("t")
+            : Event.IsLive
+            ? Event.DownDistance
+            : "Final";
+
+        RightHeaderValue = string.Join(',', Event.BroadcastStations!);
+    }
+
+    private string? LeftHeaderValue { get; set; }
+    private string? CenterHeaderValue { get; set; }
+    private string? RightHeaderValue { get; set; }
+
+    [Parameter]
+    public required SportLeagueEvent Event { get; init; }
+}

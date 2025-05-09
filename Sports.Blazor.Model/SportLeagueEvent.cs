@@ -6,6 +6,7 @@ public class SportLeagueEvent
     public SportCompetitor FirstTeam { get; init; }
     public SportCompetitor SecondTeam { get; init; }
     public DateTime? GameTime { get; init; }
+    public DateTime? GameTimeLocal => GameTime!.Value.ToLocalTime();
     public bool IsFinished { get; init; }
     public bool IsInFuture { get; init; }
     public bool IsLive { get; init; }

@@ -1,0 +1,20 @@
+﻿@using Sports.Blazor.Components.EventItem
+@using Sports.Blazor.Model
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        row-gap: .5rem;
+        column-gap: 1rem;"
+    >
+        <LeagueWeekEventItemHeader Event="Event" />
+        <LayoutView Layout="typeof(EventItemTeamsContainer)">
+            <EventItemTeam IsFirst="true" Team="@Event.FirstTeam" />
+            <EventItemTeam IsFirst="false" Team="@Event.SecondTeam" />
+        </LayoutView>
+    </div>
+@code {
+    [Parameter]
+    public required SportLeagueEvent Event { get; init; }
+}

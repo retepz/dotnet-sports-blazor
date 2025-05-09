@@ -1,0 +1,56 @@
+﻿@page "/leagues/{leagueType}/week/events"
+@using Sports.Blazor.Components
+@using Sports.Blazor.Components.LeagueWeekEventItem
+@using Sports.Blazor.Model
+@using Sports.Blazor.Service.Interface
+@inject ISportLeagueService _sportLeagueService
+
+<PageTitle>Week Events | @LeagueType</PageTitle>
+<LayoutView Layout="typeof(RouteContentContainer)">
+    @if(Loading)
+    {
+        <Loading />
+        return;
+    }
+
+    <div style="font-size: 2rem">@LeagueType</div>
+    @if (Events != null)
+    {
+        @foreach(var weekEvent in Events)
+        {
+            <LeagueWeekEventItem Event="@weekEvent" />
+        }
+    }
+    else
+    {
+        <div>No games this week/Off season</div>
+    }
+</LayoutView>
+
+@code {
+    protected override async Task OnParametersSetAsync()
+    {
+        Loading = true;
+        var events = await _sportLeagueService.GetWeekEvents(LeagueType);
+        if(events != null)
+        {
+            Events = events
+                .OrderBy(e => e.IsLive)
+                .ThenBy(e => e.IsInFuture)
+                .ThenBy(e => e.IsFinished)
+                .ThenBy(e => e.GameTime);
+        }
+        Loading = false;
+    }
+
+    private string GetEventsUrl()
+    {
+        return $"/leagues/{LeagueType}/week/events";
+    }
+
+    private IEnumerable<SportLeagueEvent>? Events { get; set; }
+    private bool Loading { get; set; } = true;
+
+    [Parameter]
+    public required string LeagueType { get; init; }
+}

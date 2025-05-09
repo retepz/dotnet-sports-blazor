@@ -1,0 +1,64 @@
+﻿@using Sports.Blazor.Model
+<div class="@GetContainerClass()" style="@GetContainerDynamicStyle()">
+    <img src="@Team.Logo" alt="@Team.Name" />
+    <div class="@GetTeamInfoClass()">
+        <div style="font-size: .8rem">@Team.Record</div>
+        <div style="font-size: 1rem">@Team.Location</div>
+        <div style="font-size: 1rem">@Team.Name</div>
+        <div style="font-size: 1.1rem; font-weight: bold">
+            @Team.Score
+        </div>
+    </div>
+    <div class="@GetHomeAwayClass()">@GetHomeAwayText()</div>
+</div>
+
+@code {
+    private string GetContainerDynamicStyle()
+    {
+        return $"background-color: #{Team.Color}";
+    }
+
+    private string GetContainerClass()
+    {
+        const string baseClass = "event-item-team-container";
+        if (IsFirst)
+        {
+            return $"{baseClass} {baseClass}-first";
+        }
+
+        return $"{baseClass} {baseClass}-second";
+    }
+
+    private string GetTeamInfoClass()
+    {
+        const string baseClass = "event-item-team-info";
+        if (IsFirst)
+        {
+            return $"{baseClass} {baseClass}-first";
+        }
+
+        return $"{baseClass} {baseClass}-second";
+    }
+
+    private string GetHomeAwayClass()
+    {
+        const string baseClass = "event-item-team-home-away";
+        if (IsFirst)
+        {
+            return $"{baseClass}-first";
+        }
+
+        return $"{baseClass}-second";
+    }
+
+    private string GetHomeAwayText()
+    {
+        return Team.IsHome ? "Home" : "Away";
+    }
+
+    [Parameter]
+    public required bool IsFirst { get; init; }
+
+    [Parameter]
+    public required SportCompetitor Team { get; init; }
+}
