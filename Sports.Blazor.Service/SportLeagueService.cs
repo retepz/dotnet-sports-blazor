@@ -1,8 +1,8 @@
 ﻿namespace Sports.Blazor.Service;
 
 using Microsoft.Extensions.Options;
-using Sports.Blazor.Config;
 using Sports.Blazor.Model;
+using Sports.Blazor.Model.Config;
 using Sports.Blazor.Model.Response;
 using Sports.Blazor.Service.Interface;
 using System.Net.Http.Json;

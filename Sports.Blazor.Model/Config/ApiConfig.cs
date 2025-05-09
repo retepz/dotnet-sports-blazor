@@ -1,4 +1,4 @@
-﻿namespace Sports.Blazor.Config;
+﻿namespace Sports.Blazor.Model.Config;
 
 public sealed record ApiConfig
 {

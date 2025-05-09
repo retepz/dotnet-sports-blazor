@@ -3,7 +3,7 @@ namespace Sports.Blazor;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Sports.Blazor.Config;
+using Sports.Blazor.Model.Config;
 using Sports.Blazor.Service;
 using Sports.Blazor.Service.Interface;
 

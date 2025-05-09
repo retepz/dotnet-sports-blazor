@@ -30,4 +30,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.4" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sports.Blazor.Model\Sports.Blazor.Model.csproj" />
+    <ProjectReference Include="..\Sports.Blazor.Service\Sports.Blazor.Service.csproj" />
+  </ItemGroup>
+
 </Project>
