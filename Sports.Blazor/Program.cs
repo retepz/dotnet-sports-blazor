@@ -20,6 +20,7 @@ public class Program
             .AddOptions()
             .Configure<ApiConfig>(apiConfig => builder.Configuration.GetSection("Api").Bind(apiConfig))
             .AddScoped<ISportLeagueService, SportLeagueService>()
+            .AddSingleton<ILocalStorageService, LocalStorageService>()
             .AddScoped(sp => new HttpClient 
             { 
                 BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)

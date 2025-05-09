@@ -1,5 +1,8 @@
 ﻿@using Sports.Blazor.Components
 @using Sports.Blazor.Model
+@using Sports.Blazor.Service.Interface
+@inject ILocalStorageService _localStorageService
+
 <nav style="@GetNavElementCSS()">
     <div style="@GetNavChildCSS()">
         @foreach(var sportType in Enum.GetNames<SportType>().Where(name => name != $"{SportType.None}"))
@@ -17,11 +20,11 @@
                 }
             </style>
             <NavLink 
-                ActiveClass="active-nav-item"
+            ActiveClass="active-nav-item"
                 class="nav-item"
                 href="@GenHref(sportType)">
-                    @sportType
-                </NavLink>
+                @sportType
+            </NavLink>
         }
     </div>
     <button class="toggle-nav" title="Toggle Nav" @onclick=ToggleNav>
@@ -30,11 +33,19 @@
 </nav>
 
 @code {
-    private bool Show { get; set; } = true;
+    private const string _toggleNavKey = "ToggleNav";
 
-    private void ToggleNav()
+    protected override async Task OnParametersSetAsync()
+    {
+        var showItemLocalStorage = await _localStorageService.GetBool(_toggleNavKey);
+        Show = showItemLocalStorage ?? true;    }
+
+    private bool Show { get; set; } = false;
+
+    private async Task ToggleNav()
     {
         Show = !Show;
+        await _localStorageService.Set(_toggleNavKey, $"{Show}");
     }
 
     private string GetToggleImage()
